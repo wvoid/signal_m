@@ -1,10 +1,6 @@
-<<<<<<< HEAD:bit2dec.m
-fid=fopen("bin1","r")
-[data,count]=fread(fid,30000,"uint8")
-=======
+%%
 fid=fopen("915mhz_2","r")
 [data,count]=fread(fid,10000,"ubit8")
->>>>>>> refs/remotes/origin/main:bit2string.m
 %% 
 
 a=data(1:4,1)
