@@ -5,7 +5,7 @@ function [preambleIdx,x] = CoarseSync(stdPreamble,data)
 % data 信号数据
 %OUTPUT:
 % preambleIdx 前导码下标
-%% 归一化幅值
+%% ----------------- 归一化幅值-----------------
 A_data_max=max(abs(real(data)));
 data=data/A_data_max;
 A_stdP_max=max(abs(real(stdPreamble)));

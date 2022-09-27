@@ -8,12 +8,12 @@ signal_q=imag(data_complex);
 subplot(2,1,1)
 plot(real(data_complex))
 title('I')
-xlabel('number of samples ')
+xlabel('samples ')
 ylabel('Amplitude');
 subplot(2,1,2)
 plot(imag(data_complex))
 title('Q')
-xlabel('number of samples ')
+xlabel('samples at 2mhz')
 ylabel('Amplitude')
 %% 
 figure(2)
