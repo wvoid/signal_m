@@ -1,0 +1,12 @@
+%%相关参数预设
+ps=1e6
+N=100
+fs=32e6
+len=N*fs/ps
+m=3.5
+freqsep=m*ps
+x=randi([0 1],1,N);
+%data_complex=read_complex_binary('915_sp10mhz',40e6);
+fsk_data=fskmod([0 1 0 1 0 1 0 1 0 1 0 1 0 1],2,freqsep,32,fs);
+t=0:1/fs:(len-1)/fs;
+%plot(imag(fsk_data))

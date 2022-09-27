@@ -1,0 +1,77 @@
+%粗同步
+[peak,pt]=Coarse_sync(txwave,data,nFFT,cpLength,Number,GT,pt);
+
+%细同步：用一个子帧的所有CP同时进行互相关
+range=15;
+syn=zeros(2*range+1,1);
+for bias=max(peak-range,1):peak+range
+    syn(bias-peak+range+1)=0;
+    numi = bias;
+    for m = 1:Number
+        R=corrcoef(data(numi:numi+cpLength-1),data(numi+nFFT:numi+nFFT+cpLength-1));
+        syn(bias-peak+range+1)=syn(bias-peak+range+1)+abs(R(1,2));
+        numi = numi + 2*(nFFT+cpLength+GT);
+    end
+end
+
+%figure(5);plot(syn);
+[~,maxpoint]=max(syn);
+syn_point=peak+maxpoint-range-1;%同步点 实际上开始的第一点
+%data=data(syn_point:syn_point+fs/1000*Number*2-1)/max(abs(data(syn_point:syn_point+fs/1000*Number*2-1)));  
+k1=1;
+if k1
+%求频偏均值+去频偏
+fai=zeros(Number,1);
+Tg=nFFT/fs;
+numi=syn_point;
+for i=1:Number
+    cp1=data(numi:numi+cpLength-1);
+    cp2=data(numi+nFFT:numi+nFFT+cpLength-1);
+    R12=cp1*((cp2)');%相当于sum(cp1.*conj(cp2)) 
+    %fai(i)=atan(imag(R12)/real(R12));%返回弧度 angel也是返回弧度
+    fai(i)=angle(R12);
+    numi=numi+2*(nFFT+cpLength+GT);
+end
+deltaF=-sum(fai)/(2*pi*Tg*length(fai));
+for i=1:length(data)
+    data(i)=data(i)*exp(-2j*pi*deltaF*(i-syn_point)/fs);%去频偏
+end
+%figure(pt);pt=pt+1;plot(fai);title('Frequency offset value of each symbol'); 
+
+%二次同步
+D=1;
+for f=1:D
+    [data,deltaF,syn_point2,pt]=RM_CFO_PRACH(data,cpLength,nFFT,GT,fs,syn_point,Number,pt);
+end
+
+%三次同步
+syn=zeros(2*range+1,1);
+for bias=syn_point2-range:syn_point2+range
+    numi=bias;
+    for m = 1:Number
+        if (numi+nFFT+cpLength+GT-1)>length(data)
+            break;
+        end
+        R=corrcoef(data(numi:numi+cpLength-1),data(numi+nFFT:numi+nFFT+cpLength-1));
+        syn(bias-syn_point2+range+1)=syn(bias-syn_point2+range+1)+abs(R(1,2));
+        numi=numi+2*(nFFT+cpLength+GT);
+    end
+end
+[~,maxpoint]=max(syn);
+syn_point3=syn_point2+maxpoint-range-1; 
+data=data(syn_point3:syn_point3+fs/1000*Number*2-1)/max(abs(data(syn_point3:syn_point3+fs/1000*Number*2-1)));
+   
+%三次去频偏
+fai2=zeros(Number,1);
+numi=1;
+for i=1:Number
+    cp1=data(numi:numi+cpLength-1);cp2=data(numi+nFFT:numi+nFFT+cpLength-1);
+    RR=sum(cp1.*conj(cp2));
+    %fai2(i)=atan(imag(RR)/real(RR));
+    fai2(i)=angle(RR);
+    numi=numi+2*(nFFT+cpLength+GT);
+end
+deltaF2=-sum(fai2)/(2*pi*Tg*length(fai2));
+for i=1:length(data)
+    data(i)=data(i)*exp(-2j*pi*deltaF2*(i-1)/fs);%去频偏
+end
