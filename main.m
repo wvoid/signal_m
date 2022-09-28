@@ -27,11 +27,26 @@ nnz(isnan(fin_i))
 subplot(1,2,1); plot(abs(fin_q)); title('q');
 subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
-preamble_test=data_complex(3.2479e7:3.2484e7-1,1);
+preamble_test=data_complex(3.2479e7:3.2481e7-1,1);
+%% 
+preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
 %% ----------------- 粗同步-----------------
-[idx,x]=CoarseSync(preamble_test,data_complex(10e6:20e6,1));
+[idx,x]=CoarseSync(preamble_test,data_complex(10e6:15e6,1));
+%% 细同步
+y=Fine_sync(preamble_test_1,data_complex(10e6:15e6,1),idx,0.2,x);
 %% 
 [val,i]=sort(x,'descend');
 v=val(1:1000);
-idx=i(1:1000)
+idx=i(1:1000);
+%% 
+a=x;
+%% 
+figure(4)
+plot(a)
+xlabel('samples')
+ylabel('Correlation coefficient')
+%% 
+b=[1 2 3 2 1 0 1 1 1 1]
+%b(b<1.5)=0
+[a1,i]=findpeaks(b)
 
