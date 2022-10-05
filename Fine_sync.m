@@ -1,4 +1,4 @@
-function [preamble_index] = Fine_sync(std_preamble,data,corr_index,threshold,window)
+function [preamble_index,x] = Fine_sync(std_preamble,data,corr_index,threshold,window)
 %% 细同步
 %INPUT:
 % std_preamble 标准前导码
@@ -31,9 +31,44 @@ for i = 1:length(peaks_index)  % 遍历每一个极值
         x(1,head) = abs(R(1, 2));
         head = head+1;
         tail = head+len_p-1;
+        
     end
 
 end
 
+len_01=156;
 preamble_index = x;
+
+preamble_index(preamble_index<0.85)=0;
+x = zeros(1,length(data));
+R=zeros(1,32);
+[~,peaks_index1] = findpeaks(preamble_index);
+for i=1:length(peaks_index1)
+    head=peaks_index1(i)-2*156;
+    tail=head+len_01-1;
+    temp_head=head;
+    temp_tail=tail;
+    for k=1:4*len_01
+        if head<1
+            head = 1;
+        end
+        if tail+31*len_01>length(data)
+            break;
+        end
+        for i=1:32
+            
+
+            r=corrcoef(data(temp_head:temp_tail,1),data(head:tail,1));
+            R(1,i)=r(1,2);
+            head=head+156;
+            tail=head+len_01-1;
+            
+        end
+        x(1,temp_head)=sum(abs(R));
+        temp_head=temp_head+1;
+        temp_tail=temp_head+len_01-1;
+        head=temp_head;
+        tail=temp_tail;
+    end
+end
 end

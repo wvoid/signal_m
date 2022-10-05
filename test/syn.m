@@ -12,4 +12,6 @@ fsk_data=fskmod(x,2,freqsep,32,fs);
 t=0:1/fs:(len-1)/fs;
 f0=cos(2*pi*fc.*t)+sin(2*pi*fc.*t)*sqrt(-1);
 C=real(fsk_data.*f0);
+%% 
+
 plot(C)
