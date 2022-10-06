@@ -1,9 +1,8 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('915mhz_sp1mhz_preamble',40e6);
+data_complex=read_complex_binary('915mhz_sp3.2mhz');
 %% 
-
-data_complex=data_complex(30e6:38e6);
+data_complex=data_complex(32e6:100e6);
 %% -----------------分别取实部(I)与虚部(Q)-----------------
 signal_i=real(data_complex);
 signal_q=imag(data_complex);
@@ -14,7 +13,7 @@ title('I')
 xlabel('number of samples ')
 ylabel('Amplitude');
 subplot(2,1,2);
-plot(x);
+plot(y);
 % subplot(2,1,2)
 % plot(imag(data_complex))
 % title('Q')
@@ -32,13 +31,14 @@ nnz(isnan(fin_i))
 subplot(1,2,1); plot(abs(fin_q)); title('q');
 subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
-preamble_test=data_complex(3.2479e7:3.2481e7-1,1);
+%preamble_test=data_complex(3.2479e7:3.2481e7-1,1);
+preamble_test=data_complex(59.315600e6:59.318800e6-1,1);
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
 %% ----------------- 粗同步-----------------
 [idx,x]=CoarseSync(preamble_test,data_complex);
 %% 细同步
-[p,x]=Fine_sync(preamble_test_1,data_complex,idx,0.2,x);
+[p,y]=Fine_sync(preamble_test,data_complex,idx,0.2,x);
 %% 
 [val,i]=sort(x,'descend');
 v=val(1:1000);
@@ -56,5 +56,5 @@ b=[1 2 3 2 1 0 1 1 1 1]
 [a1,i]=findpeaks(b)
 %% 
 figure(5)
-plot(x)
+plot(real(data_complex(46008231:46008231+3200-1)));
 

@@ -9,7 +9,7 @@ function [preamble_index,x] = Fine_sync(std_preamble,data,corr_index,threshold,w
 %OUTPUT:
 % preamble_index 前导码起始下标
 %%
-samp_rate = 5e6;  % 采样率
+samp_rate = 3.2e6;  % 采样率
 preamble_time = 0.001;  % 前导码持续时间(s)
 len_p = length(std_preamble);  % 前导码长度
 preamble_samples_pts = samp_rate*preamble_time;  % 前导码采样点数
@@ -36,7 +36,7 @@ for i = 1:length(peaks_index)  % 遍历每一个极值
 
 end
 
-len_01=156;
+len_01=100;
 preamble_index = x;
 
 preamble_index(preamble_index<0.85)=0;
@@ -44,11 +44,11 @@ x = zeros(1,length(data));
 R=zeros(1,32);
 [~,peaks_index1] = findpeaks(preamble_index);
 for i=1:length(peaks_index1)
-    head=peaks_index1(i)-2*156;
+    head=peaks_index1(i)-20*len_01;
     tail=head+len_01-1;
     temp_head=head;
     temp_tail=tail;
-    for k=1:4*len_01
+    for k=1:50*len_01
         if head<1
             head = 1;
         end
@@ -60,7 +60,7 @@ for i=1:length(peaks_index1)
 
             r=corrcoef(data(temp_head:temp_tail,1),data(head:tail,1));
             R(1,i)=r(1,2);
-            head=head+156;
+            head=head+len_01;
             tail=head+len_01-1;
             
         end
