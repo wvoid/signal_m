@@ -19,7 +19,9 @@ x = zeros(1,length(data));
 
 for i = 1:length(peaks_index)  % 遍历每一个极值
     head = (peaks_index(i)-1)*window+1-preamble_samples_pts;  % 窗口起始
-    tail = head+len_p-1;  % 窗口结束
+    tail = head+len_p-1; % 窗口结束
+%     s=head;
+%     e=head+2*preamble_samples_pts-1
     for k = 1:2*preamble_samples_pts  % 在对应极值附近遍历次数
         if head<1
             head = 1;
@@ -33,22 +35,27 @@ for i = 1:length(peaks_index)  % 遍历每一个极值
         tail = head+len_p-1;
         
     end
+%     temp=x(1,s:e);
+%     temp(temp<max(temp))=0;
+%     x(1,s:e)=temp;
 
 end
 
 len_01=100;
 preamble_index = x;
 
-preamble_index(preamble_index<0.85)=0;
+preamble_index(preamble_index<0.9)=0;
 x = zeros(1,length(data));
 R=zeros(1,32);
 [~,peaks_index1] = findpeaks(preamble_index);
 for i=1:length(peaks_index1)
-    head=peaks_index1(i)-20*len_01;
+    head=peaks_index1(i)-2*len_01;
     tail=head+len_01-1;
     temp_head=head;
     temp_tail=tail;
-    for k=1:50*len_01
+    s=head;
+    e=head+4*len_01;
+    for k=1:4*len_01
         if head<1
             head = 1;
         end
@@ -70,5 +77,8 @@ for i=1:length(peaks_index1)
         head=temp_head;
         tail=temp_tail;
     end
+    temp=x(1,s:e);
+    temp(temp<max(temp))=0;
+    x(1,s:e)=temp;
 end
 end
