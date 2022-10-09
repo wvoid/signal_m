@@ -3,6 +3,26 @@ fs=3.2e6;
 pb_t=0.001;
 pb_samples=fs*pb_t;
 [~,index]=findpeaks(pb_index);
+
+L1=length(index) 
+for n=1:length(index)
+    R=zeros(31,1);
+    for i=1:31
+        pb_current=data(index(n):index(n)+pb_samples-1,1);
+        pre=pb_current((i-1)*100+1:(i-1)*100+100);
+        next=pb_current((i)*100+1:(i)*100+100);
+        r=corrcoef(pre,next);
+        R(i,1)=abs(r(1,2));
+        
+    end
+        if sum(R)<28
+            pb_index(index(n))=0;
+        end
+     sum(R)
+end
+[~,index]=findpeaks(pb_index);
+L2=length(index)
+
 pb_mat=zeros(length(index),pb_samples);
 for n=1:length(index)
     pb_current=data(index(n):index(n)+pb_samples-1,1);
