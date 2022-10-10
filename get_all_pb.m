@@ -6,16 +6,23 @@ pb_samples=fs*pb_t;
 
 L1=length(index) 
 for n=1:length(index)
-    R=zeros(31,1);
-    for i=1:31
-        pb_current=data(index(n):index(n)+pb_samples-1,1);
+    R=zeros(32,1);
+    for i=1:32
+        if i==32
+            pre=pb_current(1:100);
+            next=pb_current(3200-100+1:3200);
+            r=corrcoef(pre,next);
+            R(i,1)=abs(r(1,2));
+            break;
+        end
+        pb_current=data(index(n):index(n)+pb_samples-1);
         pre=pb_current((i-1)*100+1:(i-1)*100+100);
         next=pb_current((i)*100+1:(i)*100+100);
         r=corrcoef(pre,next);
         R(i,1)=abs(r(1,2));
         
     end
-        if sum(R)<28
+        if sum(R)<30
             pb_index(index(n))=0;
         end
      sum(R)
@@ -25,12 +32,12 @@ L2=length(index)
 
 pb_mat=zeros(length(index),pb_samples);
 for n=1:length(index)
-    pb_current=data(index(n):index(n)+pb_samples-1,1);
+    pb_current=data(index(n):index(n)+pb_samples-1);
     fai=zeros(31,1);
     for i=1:31
     p1=pb_current((i-1)*100+1:(i-1)*100+100);
     p2=pb_current((i)*100+1:(i)*100+100);
-    delta_theta=angle(p1'*p2);
+    delta_theta=angle(p1*p2');
     fai(i)=delta_theta;
     end
     deltaF=sum(fai)/(2*pi*length(fai)*(pb_t/32));

@@ -10,6 +10,7 @@ f=fopen(filename,'rb');
 if(f<0)
     v=0;
 else
+    n=ceil(count/100e6);
     t=fread(f,[2,count],'float');
     fclose(f);
     v=t(1,:)+t(2,:)*i;

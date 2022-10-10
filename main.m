@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('915mhz_sp3.2mhz_indoor2',130e6);
+data_complex=read_complex_binary('915mhz_sp3.2mhz_indoor_moving',80e6);
 %data_complex=data_complex(32e6:100e6,1);
 %% 
 %data_complex=data_complex/max(abs(real(data_complex)));
@@ -70,11 +70,8 @@ for i=1:3200
     y1(i)=preamble_test(i)*exp(-2*pi*1i*deltaF*i*(1/3.2e6));
 end
 %% 
-a=load('pb.mat');
-
-preamble_test=a.y1;
-%preamble_test=preamble_test/max(abs(real(preamble_test)));
-plot(real(preamble_test));
+filename='915mhz_sp3.2mhz_outdoor_5min';
+pb_mat=get_pb_fromfile(filename,preamble_test);
 %% 
 [r,~]=size(pb_mat);
 for i=1:r

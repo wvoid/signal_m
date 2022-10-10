@@ -20,7 +20,7 @@ for i = 1:cnt
     if tail > len_d
         break;
     end
-    R = corrcoef(std_preamble, data(head:tail, 1)); % 计算相关系数
+    R = corrcoef(std_preamble, data(head:tail)); % 计算相关系数
     x(1, i) = abs(R(1, 2));
     head = tail+1;
     tail = head+window-1;

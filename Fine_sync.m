@@ -29,7 +29,7 @@ for i = 1:length(peaks_index)  % 遍历每一个极值
         if tail>length(data)
             break;
         end
-        R = corrcoef(std_preamble, data(head:tail, 1)); % 计算相关系数
+        R = corrcoef(std_preamble, data(head:tail)); % 计算相关系数
         x(1,head) = abs(R(1, 2));
         head = head+1;
         tail = head+len_p-1;
