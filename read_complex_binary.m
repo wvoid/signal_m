@@ -13,7 +13,7 @@ else
     n=ceil(count/100e6);
     t=fread(f,[2,count],'float');
     fclose(f);
-    v=t(1,:)+t(2,:)*i;
+    v=t(1,:)+t(2,:)*1i;
     [r,c]=size(v);
     v=reshape(v,c,r);
 end

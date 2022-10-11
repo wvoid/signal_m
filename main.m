@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('915mhz_sp3.2mhz_indoor_moving',80e6);
+data_complex=read_complex_binary('indoor_915.5_1.6',30e6);
 %data_complex=data_complex(32e6:100e6,1);
 %% 
 %data_complex=data_complex/max(abs(real(data_complex)));
@@ -34,7 +34,8 @@ subplot(1,2,1); plot(abs(fin_q)); title('q');
 subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
 %preamble_test=data_complex(52623800+20:52623800-1+1600+20,1);
-preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
+%preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
+preamble_test=data_complex(15.883555e6:15.883555e6+1600-1);
 %preamble_test=a.e_fsk;
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
@@ -70,11 +71,11 @@ for i=1:3200
     y1(i)=preamble_test(i)*exp(-2*pi*1i*deltaF*i*(1/3.2e6));
 end
 %% 
-filename='915mhz_sp3.2mhz_outdoor_5min';
+filename='indoor_915.5_1.6';
 pb_mat=get_pb_fromfile(filename,preamble_test);
 %% 
 [r,~]=size(pb_mat);
-for i=1:r
+for i=531:550
     figure(i);
     plot(real(pb_mat(i,:)))
 end

@@ -9,7 +9,7 @@ function [preamble_index,x] = Fine_sync(std_preamble,data,corr_index,threshold,w
 %OUTPUT:
 % preamble_index 前导码起始下标
 %%
-samp_rate = 3.2e6;  % 采样率
+samp_rate = 1.6e6;  % 采样率
 preamble_time = 0.001;  % 前导码持续时间(s)
 len_p = length(std_preamble);  % 前导码长度
 preamble_samples_pts = samp_rate*preamble_time;  % 前导码采样点数
