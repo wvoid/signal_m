@@ -18,7 +18,7 @@ corr_index(corr_index<threshold) = 0;  % 小于门限值的位置忽略
 x = zeros(1,length(data));
 
 for i = 1:length(peaks_index)  % 遍历每一个极值
-    head = (peaks_index(i)-1)*window+1-preamble_samples_pts;  % 窗口起始
+    head = (peaks_index(i)-1)*window+1-1*preamble_samples_pts;  % 窗口起始
     tail = head+len_p-1; % 窗口结束
      s=head;
      e=head+2*preamble_samples_pts-1

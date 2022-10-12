@@ -33,6 +33,7 @@ end
 
 pb_mat=zeros(length(index),pb_samples);
 for n=1:length(index)
+    index(n)
     pb_current=data(index(n):index(n)+pb_samples-1);
     fai=zeros(31,1);
     for i=1:31
