@@ -3,6 +3,7 @@ fs=1.6e6;
 len_01=50;
 pb_t=0.001;
 pb_samples=fs*pb_t;
+pb_index(pb_index<0.8)=0;
 [~,index]=findpeaks(pb_index);
 
 %L1=length(index) 

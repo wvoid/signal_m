@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('indoor2_915.5_1.6',100e6);
+data_complex=read_complex_binary('indoor_915.5_1.6_v52',10e6);
 %data_complex=data_complex(32e6:100e6,1);
 %% 
 %data_complex=data_complex/max(abs(real(data_complex)));
@@ -14,8 +14,8 @@ title('I')
 xlabel('number of samples ')
 ylabel('Amplitude');
 %scatterplot(data_complex(59.315600e6-10:59.318800e6-1-10,1))
-%  subplot(2,1,2);
-%  plot(idx);
+ subplot(2,1,2);
+ plot(y);
 % subplot(2,1,2)
 % plot(imag(data_complex))
 % title('Q')
@@ -35,14 +35,14 @@ subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
 %preamble_test=data_complex(52623800+20:52623800-1+1600+20,1);
 %preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
-preamble_test=data_complex(39220984:39220984+1600-1);
+preamble_test=data_complex(4285100:4285100+1600-1);
 %preamble_test=a.e_fsk;
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
 %% ----------------- 粗同步-----------------
 [idx,x]=CoarseSync(preamble_test,data_complex);
 %% 细同步
-[p,y]=Fine_sync(preamble_test,data_complex,idx,0.08,x);
+[p,y]=Fine_sync(preamble_test,data_complex,idx,0.2,x);
 %% 去频偏
 pb_mat=get_all_pb(data_complex,y);
 %% 
@@ -71,11 +71,11 @@ for i=1:3200
     y1(i)=preamble_test(i)*exp(-2*pi*1i*deltaF*i*(1/3.2e6));
 end
 %% 
-filename='indoor2_915.5_1.6';
+filename='indoor_915.5_1.6_v52';
 pb_mat=get_pb_fromfile(filename,preamble_test);
 %% 
 [r,~]=size(pb_mat);
-for i=1:r
+for i=1:5
     figure(i);
     plot(real(pb_mat(i,:)))
 end
