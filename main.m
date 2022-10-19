@@ -1,9 +1,9 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('indoor_915.5_1.6_v52',10e6);
+data_complex=read_complex_binary('indoor_v5_1',30e6);
 %data_complex=data_complex(32e6:100e6,1);
 %% 
-%data_complex=data_complex/max(abs(real(data_complex)));
+data_complex=data_complex(150e6:200e6);
 %% -----------------分别取实部(I)与虚部(Q)-----------------
 signal_i=real(data_complex);
 signal_q=imag(data_complex);
@@ -14,8 +14,8 @@ title('I')
 xlabel('number of samples ')
 ylabel('Amplitude');
 %scatterplot(data_complex(59.315600e6-10:59.318800e6-1-10,1))
- subplot(2,1,2);
- plot(y);
+%  subplot(2,1,2);
+%  plot(idx);
 % subplot(2,1,2)
 % plot(imag(data_complex))
 % title('Q')
@@ -35,7 +35,7 @@ subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
 %preamble_test=data_complex(52623800+20:52623800-1+1600+20,1);
 %preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
-preamble_test=data_complex(4285100:4285100+1600-1);
+preamble_test=data_complex(29504100-10:29504100-10+1600-1);
 %preamble_test=a.e_fsk;
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
@@ -71,7 +71,7 @@ for i=1:3200
     y1(i)=preamble_test(i)*exp(-2*pi*1i*deltaF*i*(1/3.2e6));
 end
 %% 
-filename='indoor_915.5_1.6_v52';
+filename='indoor_v5_1';
 pb_mat=get_pb_fromfile(filename,preamble_test);
 %% 
 [r,~]=size(pb_mat);

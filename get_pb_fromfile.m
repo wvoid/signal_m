@@ -5,12 +5,12 @@ pb_mat=zeros;
 f=fopen(filename,'rb');
 i=1;
 pb_mat=[];
-k=1;
+% k=1;
 while n==100e6
-    k=k+1;
-    if k>2
-        break;
-    end
+%     k=k+1;
+%     if k>2
+%         break;
+%     end
 
     [t,n]=fread(f,[2,count],'float');
     n=n/2;
@@ -23,7 +23,7 @@ while n==100e6
     pb_mat=[pb_mat;get_all_pb(v,y)];
     [r,~]=size(pb_mat);
     r
-    if r>1000
+    if r>2000
         break;
     end
     clear y;
