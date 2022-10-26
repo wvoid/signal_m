@@ -16,17 +16,22 @@ while n==100e6
     n=n/2;
     v=t(1,:)+t(2,:)*1i;
     clear t;
-    [idx,x]=CoarseSync(preamble_test,v);
-    [p,y]=Fine_sync(preamble_test,v,idx,0.2,x);
-    clear idx;
-    clear p;
-    pb_mat=[pb_mat;get_all_pb(v,y)];
+    x=start_detect(v);
+    y=self_sync(v,x);
+    clear x;
+    z=finesync(v,y,preamble_test);
+    clear y;
+%     [idx,x]=CoarseSync(preamble_test,v);
+%     [p,y]=Fine_sync(preamble_test,v,idx,0.2,x);
+%     clear idx;
+%     clear p;
+    pb_mat=[pb_mat;get_all_pb(v,z)];
     [r,~]=size(pb_mat);
     r
     if r>2000
         break;
     end
-    clear y;
+    clear z;
     clear v;
 end
 fclose(f);
