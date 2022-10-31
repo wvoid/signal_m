@@ -17,7 +17,9 @@ while n==100e6
     v=t(1,:)+t(2,:)*1i;
     clear t;
     x=start_detect(v);
+    
     y=self_sync(v,x);
+    
     clear x;
     z=finesync(v,y,preamble_test);
     clear y;
@@ -25,7 +27,9 @@ while n==100e6
 %     [p,y]=Fine_sync(preamble_test,v,idx,0.2,x);
 %     clear idx;
 %     clear p;
+    tic
     pb_mat=[pb_mat;get_all_pb(v,z)];
+    toc
     [r,~]=size(pb_mat);
     r
     if r>2000

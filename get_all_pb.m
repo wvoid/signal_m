@@ -41,7 +41,7 @@ for n=1:length(index)
     for i=1:31
     p1=pb_current((i-1)*len_01+1:(i-1)*len_01+len_01);
     p2=pb_current((i)*len_01+1:(i)*len_01+len_01);
-    delta_theta=angle(p1*p2');
+    delta_theta=angle(p1'*p2);
     fai(i)=delta_theta;
     end
     deltaF=sum(fai)/(2*pi*length(fai)*(pb_t/32));

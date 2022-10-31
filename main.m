@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('indoor_test',130e6);
+data_complex=read_complex_binary('indoor_h2',50e6);
 % data_complex=data_complex(100e6:130e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -71,16 +71,22 @@ for i=1:3200
     y1(i)=preamble_test(i)*exp(-2*pi*1i*deltaF*i*(1/3.2e6));
 end
 %% 
-filename='indoor_test';
+clear;
+load pb_h1.mat;
+filename='indoor_h2';
 pb_mat=get_pb_fromfile(filename,preamble_test);
+
 %% 
 [r,~]=size(pb_mat);
-for i=133:136
+for i=1:6
     figure(i);
     plot(real(pb_mat(i,:)))
 end
 %% 
+tic
 x=start_detect(data_complex);
 y=self_sync(data_complex,x);
-% z=finesync(data_complex,y,preamble_test);
+% toc
+z=finesync(data_complex,y,preamble_test);
+% 
 pb_mat=get_all_pb(data_complex,y);
