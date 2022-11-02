@@ -29,7 +29,7 @@ for m=1:len
     sum_R=sum(R,2);
     [max_val,max_index]=max(sum_R);
     max_val
-    if max_val>15
+    if max_val>14
         x(now+max_index)=1;
     end
 end

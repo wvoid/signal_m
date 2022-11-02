@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('indoor_h2',50e6);
+data_complex=read_complex_binary('indoor_h2_outdoor',10e6);
 % data_complex=data_complex(100e6:130e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -35,7 +35,7 @@ subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
 %preamble_test=data_complex(52623800+20:52623800-1+1600+20,1);
 %preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
-preamble_test=data_complex(25563700+25:25563700+25+1600-1);
+preamble_test=data_complex(5961140-10:5961140-10+1600-1);
 %preamble_test=a.e_fsk;
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
@@ -78,7 +78,7 @@ pb_mat=get_pb_fromfile(filename,preamble_test);
 
 %% 
 [r,~]=size(pb_mat);
-for i=1:6
+for i=1:10
     figure(i);
     plot(real(pb_mat(i,:)))
 end
@@ -86,7 +86,7 @@ end
 tic
 x=start_detect(data_complex);
 y=self_sync(data_complex,x);
-% toc
+toc
 z=finesync(data_complex,y,preamble_test);
 % 
-pb_mat=get_all_pb(data_complex,y);
+pb_mat=get_all_pb(data_complex,z);
