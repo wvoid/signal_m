@@ -12,6 +12,9 @@ for m=1:len
     now=peak_index(m);
     R=zeros(offset,16);
     for k=1:offset
+        if now+k+pb_samples-1>length(data)
+            break;
+        end
         pb_current=data(now+k:now+k+pb_samples-1);
         for i=1:15
             pre=pb_current((i-1)*len_01*2+1:(i-1)*len_01*2+len_01*2);

@@ -28,11 +28,11 @@ while n==100e6
 %     clear idx;
 %     clear p;
     tic
-    pb_mat=[pb_mat;get_all_pb(v,z)];
+    pb_mat=[pb_mat;get_raw_pb(v,z)];
     toc
     [r,~]=size(pb_mat);
     r
-    if r>2000
+    if r>5000
         break;
     end
     clear z;

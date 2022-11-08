@@ -21,9 +21,11 @@ for k=1:50:length(temp)
 end
 max_x=max(temp_var)
 avg_x=mean(temp_var);
-temp_var(temp_var<max_x/2)=0;
+temp_var(temp_var<max_x/8)=0;
 x(i:e)=temp_var;
 end
+
+
 
 % x=zeros(len,1);
 % for i=1:50:len-2000

@@ -1,7 +1,7 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('indoor_h2_outdoor',10e6);
-% data_complex=data_complex(100e6:130e6,1);
+data_complex=read_complex_binary('v1',100e6);
+data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
 %% -----------------分别取实部(I)与虚部(Q)-----------------
@@ -35,7 +35,7 @@ subplot(1,2,2); plot(abs(fin_i)); title('i');
 %% -----------------参考前导码-----------------
 %preamble_test=data_complex(52623800+20:52623800-1+1600+20,1);
 %preamble_test=data_complex(59.315600e6-10:59.318800e6-1-10,1);
-preamble_test=data_complex(5961140-10:5961140-10+1600-1);
+preamble_test=data_complex(7633726:7633726+1600-1);
 %preamble_test=a.e_fsk;
 %% 
 preamble_test_1=data_complex(3.2479e7:3.2484e7-1,1);
@@ -72,13 +72,13 @@ for i=1:3200
 end
 %% 
 clear;
-load pb_h1.mat;
-filename='indoor_h2';
+load pb_v1.mat;
+filename='v2';
 pb_mat=get_pb_fromfile(filename,preamble_test);
-
+pb_mat=pb_mat(1:4000,:);
 %% 
 [r,~]=size(pb_mat);
-for i=1:10
+for i=3111:3120
     figure(i);
     plot(real(pb_mat(i,:)))
 end
@@ -89,4 +89,4 @@ y=self_sync(data_complex,x);
 toc
 z=finesync(data_complex,y,preamble_test);
 % 
-pb_mat=get_all_pb(data_complex,z);
+pb_mat=get_raw_pb(data_complex,z);
