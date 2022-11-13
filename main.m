@@ -1,7 +1,7 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('v1',100e6);
-data_complex=data_complex(60e6:70e6,1);
+data_complex=read_complex_binary('h2',20e6);
+% data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
 %% -----------------分别取实部(I)与虚部(Q)-----------------
@@ -78,7 +78,7 @@ pb_mat=get_pb_fromfile(filename,preamble_test);
 pb_mat=pb_mat(1:4000,:);
 %% 
 [r,~]=size(pb_mat);
-for i=3111:3120
+for i=55:60
     figure(i);
     plot(real(pb_mat(i,:)))
 end
@@ -90,3 +90,4 @@ toc
 z=finesync(data_complex,y,preamble_test);
 % 
 pb_mat=get_raw_pb(data_complex,z);
+pb_mat_decfo=deCFO(pb_mat);
