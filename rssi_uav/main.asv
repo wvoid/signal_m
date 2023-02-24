@@ -14,18 +14,16 @@ for k=1:6
 end
 %% 归一化
 clear;
-for i=[5,6,7,8,9,10,11,12,13,14,16,18,20,25,30,35,40]
 for k=1:4
-    filename=strcat('h',num2str(k),'_',num2str(i));
+    filename=strcat('h',num2str(k));
     load(filename);
     pb_mat=normalization(pb_mat);
     filename=strcat('normal/',filename);
     save(filename,'pb_mat');
 end
-end
 %% 添加噪声
 for k=1:4
-    snr=40;
+    snr=20;
     filename=strcat('h',num2str(k));
     load(filename);
     pb_mat=awgn(pb_mat,snr);

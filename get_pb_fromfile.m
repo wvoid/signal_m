@@ -32,7 +32,7 @@ while n==100e6
     toc
     [r,~]=size(pb_mat);
     r
-    if r>4000
+    if r>500
         break;
     end
     clear z;

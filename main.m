@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('test1',20e6);
+data_complex=read_complex_binary('h4',100e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -73,12 +73,12 @@ end
 %% 
 clear;
 load pb_h1.mat;
-filename='test1';
+filename='h4';
 pb_mat=get_pb_fromfile(filename,preamble_test);
-% pb_mat=pb_mat(1:4000,:);
+% pb_mat=pb_mat(1  :4000,:);
 %% 
 [r,~]=size(pb_mat);
-for i=3355:3360
+for i=1:10
     figure(i);
     plot(real(pb_mat(i,:)))
 end
