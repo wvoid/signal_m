@@ -14,16 +14,18 @@ for k=1:6
 end
 %% 归一化
 clear;
+for i=[5,6,7,8,9,10,11,12,13,14,16,18,20,25,30,35,40]
 for k=1:4
-    filename=strcat('h',num2str(k));
+    filename=strcat('h',num2str(k),'_',num2str(i));
     load(filename);
     pb_mat=normalization(pb_mat);
     filename=strcat('normal/',filename);
     save(filename,'pb_mat');
 end
+end
 %% 添加噪声
 for k=1:4
-    snr=20;
+    snr=40;
     filename=strcat('h',num2str(k));
     load(filename);
     pb_mat=awgn(pb_mat,snr);
@@ -31,7 +33,7 @@ for k=1:4
     save(filename,'pb_mat');
 end
 %% 去载波频偏
-for k=4
+for k=['v1','v2']
     snr=70;
     filename=strcat('h',num2str(k),'_','hv');
     load(filename);
@@ -41,8 +43,9 @@ for k=4
 end
 %% 去多普勒+相位补偿
 clear;
-for k=1:4
-    filename=strcat('h',num2str(k));
+data=['h1';'h2';'h3';'h4';'v1';'v2']
+for k=1:6
+    filename=data(k,:);
     load(filename);
     pb_mat=noDopplerLos(pb_mat);
     pb_mat=deCFO(pb_mat);

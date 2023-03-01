@@ -8,6 +8,7 @@ pb_samples=1600;
 len_01=50;
 x=zeros(length(data),1);
 for m=1:len
+    len
     m
     now=peak_index(m);
     R=zeros(offset,16);

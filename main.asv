@@ -73,12 +73,12 @@ end
 %% 
 clear;
 load pb_h1.mat;
-filename='v2';
+filename='h1_远近远';
 pb_mat=get_pb_fromfile(filename,preamble_test);
 % pb_mat=pb_mat(1  :4000,:);
 %% 
 [r,~]=size(pb_mat);
-for i=150:160
+for i=100:r
     figure(i);
     plot(real(pb_mat(i,:)))
 end
