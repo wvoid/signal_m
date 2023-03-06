@@ -7,6 +7,7 @@ pb_samples=fs*pb_t;
 
 
 pb_mat_decfo=zeros(r,pb_samples);
+pb_CFO=zeros(1,r);
 for n=1:r
     
     pb_current=pb_mat(n,:);

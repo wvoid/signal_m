@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('h1_远近远',100e6);
+data_complex=read_complex_binary('h1',100e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -73,15 +73,31 @@ end
 %% 
 clear;
 load pb_h1.mat;
-filename='v2';
-pb_mat=get_pb_fromfile(filename,preamble_test);
-% pb_mat=pb_mat(1  :4000,:);
+f='h2'
+pb_mat=get_pb_fromfile(f,preamble_test);
+%% 
+clear;
+filename=['h4';'v1';'v2'];
+for i=1:6
+load pb_h1.mat;
+f=filename(i,:)
+pb_mat=get_pb_fromfile(f,preamble_test);
+pb_mat=pb_mat(1:1200,:);
+f=strcat('pb_mat/',f);
+save(f,'pb_mat');
+end
 %% 
 [r,~]=size(pb_mat);
-for i=150:160
-    figure(i);
-    plot(real(pb_mat(i,:)))
+y=zeros(1,r);
+for i=1:r
+    %figure(i);
+    %plot(abs(fft(pb_mat(i,:),160000)))
+    a=abs(fft(pb_mat(i,:),160000));
+    [val,peaks]=findpeaks(a,'SortStr','descend');
+    
+    y(i)=min(peaks(1),peaks(2));
 end
+plot([1:r],y)
 %% 
 tic
 x=start_detect(data_complex);
