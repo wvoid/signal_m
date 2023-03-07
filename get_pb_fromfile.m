@@ -20,13 +20,10 @@ while n==50e6
     
     y=self_sync(v,x);
     
+%     pb_mat
     clear x;
     z=finesync(v,y,preamble_test);
     clear y;
-%     [idx,x]=CoarseSync(preamble_test,v);
-%     [p,y]=Fine_sync(preamble_test,v,idx,0.2,x);
-%     clear idx;
-%     clear p;
     tic
     pb_mat=[pb_mat;get_raw_pb(v,z)];
     toc

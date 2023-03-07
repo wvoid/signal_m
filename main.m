@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('h1',100e6);
+data_complex=read_complex_binary('h2',100e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -77,20 +77,24 @@ f='h2'
 pb_mat=get_pb_fromfile(f,preamble_test);
 %% 
 clear;
-filename=['h4';'v1';'v2'];
-for i=1:6
+filename=['h1'];
+for i=1
 load pb_h1.mat;
 f=filename(i,:)
 pb_mat=get_pb_fromfile(f,preamble_test);
-pb_mat=pb_mat(1:1200,:);
-f=strcat('pb_mat/',f);
+% pb_mat=pb_mat(1:1200,:);
+f=strcat('pb_mat/',f,'_1');
 save(f,'pb_mat');
 end
-%% 
+%% 频偏获取
+[r,~]=size(pb_mat);
+[pb_mat_noCFO,CFO]=deCFO(pb_mat);
+plot([1:r],CFO);
+%% 频点漂移
 [r,~]=size(pb_mat);
 y=zeros(1,r);
 for i=1:r
-    %figure(i);
+    %figure(i); 
     %plot(abs(fft(pb_mat(i,:),160000)))
     a=abs(fft(pb_mat(i,:),160000));
     [val,peaks]=findpeaks(a,'SortStr','descend');
@@ -99,11 +103,16 @@ for i=1:r
 end
 plot([1:r],y)
 %% 
+[r,~]=size(pb_mat);
+for i=1:r
+    figure(i);
+    plot(real(pb_mat(i,:)))
+end
+%% 手动
 tic
-x=start_detect(data_complex);
+x=start_detect(data_complex(8303940:44047900));
 y=self_sync(data_complex,x);
-toc
+toc1
 z=finesync(data_complex,y,preamble_test);
 % 
 pb_mat=get_raw_pb(data_complex,z);
-pb_mat_decfo=deCFO(pb_mat);
