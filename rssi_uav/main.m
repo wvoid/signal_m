@@ -1,5 +1,14 @@
-%%
-features_mat=get_PSfeature(pb_mat);
+%%Preprocess
+data=['h1';'h2';'h3';'h4';'v1';'v2'];
+for i=1:6
+    f=data(i,:);
+    load(f);
+    pb_mat=pb_mat(:,1+100:1600-100);
+    pb_mat=deCFO(pb_mat);
+    pb_mat=normalization(pb_mat);
+    filename=strcat('preprocess/',f);
+    save(filename,'pb_mat');
+end
 %% 
 for k=1:6
     filename=strcat('pb_mat_',num2str(k));

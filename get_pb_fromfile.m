@@ -1,12 +1,12 @@
 function pb_mat=get_pb_fromfile(filename,preamble_test)
-count=50e6;
+count=100e6;
 n=count;
 pb_mat=zeros;
 f=fopen(filename,'rb');
 i=1;
 pb_mat=[];
 % k=1;
-while n==50e6
+while n==100e6
 %     k=k+1;
 %     if k>2
 %         break;
@@ -29,7 +29,7 @@ while n==50e6
     toc
     [r,~]=size(pb_mat);
     r
-    if r>100
+    if r>4000
         break;
     end
     clear z;

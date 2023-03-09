@@ -10,7 +10,7 @@ for i=1:step:len
     end
 temp=d(i:e);
 avg_d=mean(temp);
-temp(temp<1.2*avg_d)=0;
+temp(temp<3*avg_d)=0;
 temp_var=zeros(length(temp),1);
 for k=1:50:length(temp)
     e1=k+50-1;
