@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('h2_远离',100e6);
+data_complex=read_complex_binary('h2_接近远离接近远离_2m2',100e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -101,16 +101,15 @@ for i=1:r
     
     y(i)=min(peaks(1),peaks(2));
 end
-plot(y)
 %% 
 [r,~]=size(pb_mat);
-for i=1:r
-    figure(i);
+for i=1:4
+    figure(i+3);
     plot(real(pb_mat(i,:)))
 end
 %% 手动
 tic
-temp=data_complex(1:16777200);
+temp=data_complex;
 x=start_detect(temp);
 y=self_sync(temp,x);
 toc

@@ -2,8 +2,9 @@ function [pb_mat_decfo,pb_CFO]=deCFO(pb_mat)
 fs=1.6e6;
 len_01=50;
 pb_t=0.001;
-pb_samples=fs*pb_t;
-[r,~]=size(pb_mat);
+
+[r,c]=size(pb_mat);
+pb_samples=c;
 
 
 pb_mat_decfo=zeros(r,pb_samples);
