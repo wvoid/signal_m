@@ -77,7 +77,7 @@ f='h2'
 pb_mat=get_pb_fromfile(f,preamble_test);
 %% 
 clear;
-filename=['h1'];
+filename=['h1';'h2';'h3';'h4';'v1';'v2'];
 for i=1
 load pb_h1.mat;
 f=filename(i,:)
@@ -88,22 +88,25 @@ save(f,'pb_mat');
 end
 %% 频偏获取
 [r,~]=size(pb_mat);
-[pb_mat,CFO]=deCFO(pb_mat);
+[pb_mat,CFO]=deCFO_f(pb_mat);
 plot([1:r],CFO);
+%% 
+[pb_mat]=deCFO_i(pb_mat,pb_baseband);
 %% 频点漂移
 [r,~]=size(pb_mat);
 y=zeros(1,r);
 for i=1:r
     %figure(i); 
     %plot(abs(fft(pb_mat(i,:),160000)))
-    a=abs(fft(pb_mat(i,:),160000));
+    a=abs(fft(pb_mat(i,:),1600000));
     [val,peaks]=findpeaks(a,'SortStr','descend');
     
     y(i)=min(peaks(1),peaks(2));
 end
+plot(y)
 %% 
 [r,~]=size(pb_mat);
-for i=1:4
+for i=1:5
     figure(i+3);
     plot(real(pb_mat(i,:)))
 end
