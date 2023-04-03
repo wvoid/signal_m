@@ -1,11 +1,11 @@
-function x=self_sync(data,start_index)
-
+function x=self_sync(data,start_index,sample_rate)
+times=sample_rate/1.6;
 [val,peak_index]=findpeaks(start_index);
 len=length(peak_index);
 len
-offset=150;
-pb_samples=1600;
-len_01=50;
+offset=150*3;
+pb_samples=1600*times;
+len_01=50*times;
 x=zeros(length(data),1);
 for m=1:len
     len

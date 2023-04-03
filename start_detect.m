@@ -1,7 +1,8 @@
-function x = start_detect(data)
+function x = start_detect(data,sample_rate)
+times=sample_rate/1.6;
 d=abs(data);
 len=length(d);
-step=1e6;
+step=1e6*times;
 x=zeros(len,1);
 for i=1:step:len
     e=i+step-1;
@@ -12,8 +13,8 @@ temp=d(i:e);
 avg_d=mean(temp);
 temp(temp<1.2*avg_d)=0;
 temp_var=zeros(length(temp),1);
-for k=1:50:length(temp)
-    e1=k+50-1;
+for k=1:50*times:length(temp)
+    e1=k+50*times-1;
     if e1>length(temp)
         e1=length(temp);
     end
