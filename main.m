@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('h2_接近远离接近远离_2m2',100e6);
+data_complex=read_complex_binary('h1',20e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -78,20 +78,19 @@ pb_mat=get_pb_fromfile(f,preamble_test);
 %% 
 clear;
 filename=['h1';'h2';'h3';'h4';'v1';'v2'];
-for i=1
-load pb_h1.mat;
+for i=5:6
 f=filename(i,:)
+f_load=strcat('pb_',f);
+load(f_load);
 pb_mat=get_pb_fromfile(f,preamble_test);
-% pb_mat=pb_mat(1:1200,:);
-f=strcat('pb_mat/',f,'_1');
+% pb_mat=pb_mat(1:500,:);
+f=strcat('pb_mat/',f);
 save(f,'pb_mat');
 end
 %% 频偏获取
 [r,~]=size(pb_mat);
-[pb_mat,CFO]=deCFO_f(pb_mat);
+[pb_mat,CFO]=deCFO(pb_mat);
 plot([1:r],CFO);
-%% 
-[pb_mat]=deCFO_i(pb_mat,pb_baseband);
 %% 频点漂移
 [r,~]=size(pb_mat);
 y=zeros(1,r);
@@ -106,16 +105,17 @@ end
 plot(y)
 %% 
 [r,~]=size(pb_mat);
-for i=1:5
+for i=30:r
     figure(i+3);
     plot(real(pb_mat(i,:)))
 end
 %% 手动
+sample_rate=6.4;
 tic
 temp=data_complex;
-x=start_detect(temp);
-y=self_sync(temp,x);
+x=start_detect(temp,sample_rate);
+y=self_sync(temp,x,sample_rate);
 toc
-z=finesync(temp,y,preamble_test);
+z=finesync(temp,y,preamble_test,sample_rate);
 % 
-pb_mat=get_raw_pb(temp,z);
+pb_mat=get_raw_pb(temp,z,sample_rate);
