@@ -97,7 +97,7 @@ y=zeros(1,r);
 for i=1:r
     %figure(i); 
     %plot(abs(fft(pb_mat(i,:),160000)))
-    a=abs(fft(pb_mat(i,:),1600000));
+    a=abs(fft(pb_mat(i,:),16000));
     [val,peaks]=findpeaks(a,'SortStr','descend');
     
     y(i)=min(peaks(1),peaks(2));
@@ -105,7 +105,7 @@ end
 plot(y)
 %% 
 [r,~]=size(pb_mat);
-for i=30:r
+for i=1:5
     figure(i+3);
     plot(real(pb_mat(i,:)))
 end
