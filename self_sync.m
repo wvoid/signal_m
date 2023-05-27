@@ -3,7 +3,7 @@ times=sample_rate/1.6;
 [val,peak_index]=findpeaks(start_index);
 len=length(peak_index);
 len
-offset=150*3;
+offset=150*1;
 pb_samples=1600*times;
 len_01=50*times;
 x=zeros(length(data),1);

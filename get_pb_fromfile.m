@@ -5,7 +5,7 @@ pb_mat=zeros;
 f=fopen(filename,'rb');
 i=1;
 pb_mat=[];
-sample_rate=6.4;
+sample_rate=1.6;
 % k=1;
 while n==120e6
 %     k=k+1;

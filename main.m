@@ -78,7 +78,7 @@ pb_mat=get_pb_fromfile(f,preamble_test);
 %% 
 clear;
 filename=['h1';'h2';'h3';'h4';'v1';'v2'];
-for i=5:6
+for i=1:6
 f=filename(i,:)
 f_load=strcat('pb_',f);
 load(f_load);
@@ -89,7 +89,7 @@ save(f,'pb_mat');
 end
 %% 频偏获取
 [r,~]=size(pb_mat);
-[pb_mat,CFO]=deCFO(pb_mat);
+[pb_mat,CFO]=deCFO_f(pb_mat,0);
 plot([1:r],CFO);
 %% 频点漂移
 [r,~]=size(pb_mat);
@@ -104,18 +104,19 @@ for i=1:r
 end
 plot(y)
 %% 
-[r,~]=size(pb_mat);
-for i=1:5
-    figure(i+3);
-    plot(real(pb_mat(i,:)))
+[r,~]=size(fo_mat);
+for i=50:55
+    figure(i);
+%     plot(abs(fft(pb_mat(i,:),1600)))
+    plot(real(fo_mat(i,:)))
 end
 %% 手动
-sample_rate=6.4;
+sample_rate=1.6;
 tic
 temp=data_complex;
 x=start_detect(temp,sample_rate);
-y=self_sync(temp,x,sample_rate);
-toc
-z=finesync(temp,y,preamble_test,sample_rate);
-% 
-pb_mat=get_raw_pb(temp,z,sample_rate);
+% y=self_sync(temp,x,sample_rate);
+% toc
+% z=finesync(temp,y,preamble_test,sample_rate);
+% % 
+% pb_mat=get_raw_pb(temp,z,sample_rate);
