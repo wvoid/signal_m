@@ -22,7 +22,7 @@ for k=1:50*times:length(temp)
 end
 max_x=max(temp_var)
 avg_x=mean(temp_var);
-temp_var(temp_var<max_x/3)=0;
+temp_var(temp_var<max_x/2)=0;
 x(i:e)=temp_var;
 end
 

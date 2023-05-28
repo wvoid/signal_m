@@ -1,0 +1,1 @@
+[ca,cd]=dwt(preamble_test,'haar');

@@ -1,6 +1,6 @@
 
 %% -----------------读文件--------------------
-data_complex=read_complex_binary('h1',20e6);
+data_complex=read_complex_binary('h2_2',80e6);
 % data_complex=data_complex(60e6:70e6,1);
 %% 
 data_complex=data_complex(150e6:200e6);
@@ -88,35 +88,35 @@ f=strcat('pb_mat/',f);
 save(f,'pb_mat');
 end
 %% 频偏获取
-[r,~]=size(pb_mat);
-[pb_mat,CFO]=deCFO_f(pb_mat,0);
-plot([1:r],CFO);
+[r,~]=size(pb_mat2);
+[pb_mat,CFO]=deCFO_f(pb_mat2,1);
+[pb_mat,~]=deCFO_f(pb_mat,0);
+[pb_mat,~]=deCFO_f(pb_mat,0);
 %% 频点漂移
-[r,~]=size(pb_mat);
+[r,~]=size(pb_mat2);
 y=zeros(1,r);
 for i=1:r
     %figure(i); 
     %plot(abs(fft(pb_mat(i,:),160000)))
-    a=abs(fft(pb_mat(i,:),16000));
+    a=abs(fft(pb_mat2(i,:),1600000));
     [val,peaks]=findpeaks(a,'SortStr','descend');
     
     y(i)=min(peaks(1),peaks(2));
 end
 plot(y)
 %% 
-[r,~]=size(fo_mat);
-for i=50:55
+[r,~]=size(pb_mat2);
+for i=26
     figure(i);
 %     plot(abs(fft(pb_mat(i,:),1600)))
-    plot(real(fo_mat(i,:)))
+    plot(real(pb_mat2(i,:)))
 end
 %% 手动
 sample_rate=1.6;
 tic
-temp=data_complex;
+temp=data_complex(29348000:end);
 x=start_detect(temp,sample_rate);
-% y=self_sync(temp,x,sample_rate);
-% toc
-% z=finesync(temp,y,preamble_test,sample_rate);
-% % 
-% pb_mat=get_raw_pb(temp,z,sample_rate);
+y=self_sync(temp,x,sample_rate);
+toc
+z=finesync(temp,y,preamble_test,sample_rate);
+pb_mat2=get_raw_pb(temp,z,sample_rate);
